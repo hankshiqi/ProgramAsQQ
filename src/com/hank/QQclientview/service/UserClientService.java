@@ -24,7 +24,7 @@ public class UserClientService {
         objectOutputStream.writeObject(user);
         ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
         Message message=(Message) objectInputStream.readObject();
-        if(message.equals(MessageType.LOG_IN_SUCCESS)){
+        if(message.mesType.equals(MessageType.LOG_IN_SUCCESS)){
             clientsocketThread clientsocketThread = new clientsocketThread(socket);
             clientsocketThread.start();//启动客户端接收服务器端线程，为了扩展，将该线程放入集合中进行管理
             ManagerClientConnectServer.addtomap(id,clientsocketThread);

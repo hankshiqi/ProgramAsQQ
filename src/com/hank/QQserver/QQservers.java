@@ -9,10 +9,22 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class QQservers {
+    public static ConcurrentHashMap<String,User> usermap=new ConcurrentHashMap<>();
     ServerSocket serverSocket=null;
-
+    static {//静态代码块，在类加载时会执行一次
+        usermap.put("影",new User("影","123456"));
+        usermap.put("夜兰",new User("夜兰","123456"));
+        usermap.put("仆人",new User("仆人","123456"));
+        usermap.put("履刑者",new User("履刑者","123456"));
+    }
+    public boolean checkuser(User user){
+        User temp=usermap.get(user.getId());
+        return temp!=null&&temp.getPsw().equals(user.getPsw());
+    }
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         new QQservers();
     }
@@ -25,7 +37,8 @@ public class QQservers {
                 ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
                 User user=(User) ois.readObject();
                 Message message=new Message();
-                if(user.getPsw().equals("123456")&&user.getId().equals("100")){
+                if(checkuser(user)){
+                    System.out.println("服务器端与"+user.getId()+"连接成功");
                     message.setMesType(MessageType.LOG_IN_SUCCESS);
                     oos.writeObject(message);
                     ServerToClientThread STCthread
@@ -33,6 +46,7 @@ public class QQservers {
                     STCthread.start();
                     ManageSTCthread.addToSmap(user.getId(),STCthread);
                 }else {
+                    System.out.println("用户"+user.getId()+"验证失败!");
                     message.setMesType(MessageType.LOG_IN_FAIL);
                     oos.writeObject(message);
                     socket.close();//登录失败后就要关闭这个socket

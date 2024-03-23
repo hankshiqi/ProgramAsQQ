@@ -6,7 +6,7 @@ public class Message implements Serializable {
     private String sender;
     private String reciver;
     private String content;
-    private String mesType;
+    public String mesType;
 
     public Message(String sender, String reciver, String content, String mesType) {
         this.sender = sender;
