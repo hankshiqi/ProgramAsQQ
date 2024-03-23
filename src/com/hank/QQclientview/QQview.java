@@ -1,15 +1,18 @@
 package com.hank.QQclientview;
 
+import com.hank.QQclientview.service.UserClientService;
 import com.hank.Utility;
+
+import java.io.IOException;
 
 public class QQview {
     private String key;
     private boolean loop=true;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         new QQview().mainMenu();
     }
-    public void mainMenu(){
+    public void mainMenu() throws IOException, ClassNotFoundException {
         while (loop){
             System.out.println("=========欢迎登录网络通信系统=========");
             System.out.println("\t\t 1.登录系统");
@@ -22,7 +25,7 @@ public class QQview {
                     String userid=Utility.readString(50);
                     System.out.println("请输入密码");
                     String psw=Utility.readString(50);
-                    if(false){//这里要编写一个类，UserClientService用于用户分类及服务
+                    if(new UserClientService().checkservice(userid,psw)){//这里要编写一个类，UserClientService用于用户分类及服务
                         System.out.println("=========网络通信系统二级菜单=========");
                         System.out.println("=========(用户 "+userid+")=========");
                         while (loop){

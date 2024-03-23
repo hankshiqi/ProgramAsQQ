@@ -15,7 +15,8 @@ import java.net.UnknownHostException;
 public class UserClientService {
     public User user=new User();
     public Socket socket;
-    public void doservice(String id,String psw) throws IOException, ClassNotFoundException {
+    public boolean checkservice(String id,String psw) throws IOException, ClassNotFoundException {
+        boolean b=false;
         user.setId(id);
         user.setPsw(psw);
         socket=new Socket(InetAddress.getLocalHost(),9999);
@@ -24,9 +25,13 @@ public class UserClientService {
         ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
         Message message=(Message) objectInputStream.readObject();
         if(message.equals(MessageType.LOG_IN_SUCCESS)){
-            new clientsocketThread(socket);
+            clientsocketThread clientsocketThread = new clientsocketThread(socket);
+            clientsocketThread.start();//启动客户端接收服务器端线程，为了扩展，将该线程放入集合中进行管理
+            ManagerClientConnectServer.addtomap(id,clientsocketThread);
+            b=true;
         }else {
 
         }
+        return b;
     }
 }
