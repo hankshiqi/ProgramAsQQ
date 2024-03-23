@@ -22,7 +22,7 @@ public class QQview {
                     String userid=Utility.readString(50);
                     System.out.println("请输入密码");
                     String psw=Utility.readString(50);
-                    if(false){
+                    if(false){//这里要编写一个类，UserClientService用于用户分类及服务
                         System.out.println("=========网络通信系统二级菜单=========");
                         System.out.println("=========(用户 "+userid+")=========");
                         while (loop){
