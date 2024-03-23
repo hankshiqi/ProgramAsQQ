@@ -30,7 +30,7 @@ public class UserClientService {
             ManagerClientConnectServer.addtomap(id,clientsocketThread);
             b=true;
         }else {
-
+            socket.close();
         }
         return b;
     }

@@ -15,6 +15,9 @@ public class Message implements Serializable {
         this.mesType = mesType;
     }
 
+    public Message() {
+    }
+
     public String getSender() {
         return sender;
     }
