@@ -9,6 +9,23 @@ public class Message implements Serializable {
     public String mesType;
     public byte[] filebyte;
     public String reciverPath;
+    public boolean online=true;
+
+    public String getReciverPath() {
+        return reciverPath;
+    }
+
+    public void setReciverPath(String reciverPath) {
+        this.reciverPath = reciverPath;
+    }
+
+    public boolean isOnline() {
+        return online;
+    }
+
+    public void setOnline(boolean online) {
+        this.online = online;
+    }
 
     public String getGeshi() {
         return reciverPath;

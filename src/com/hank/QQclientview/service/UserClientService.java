@@ -86,5 +86,6 @@ public class UserClientService {
         Socket socket1 = thread.getSocket();
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket1.getOutputStream());
         objectOutputStream.writeObject(message);
+
     }
 }

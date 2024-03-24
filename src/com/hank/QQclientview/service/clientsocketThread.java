@@ -6,6 +6,7 @@ import com.hank.User;
 
 import java.io.*;
 import java.net.Socket;
+import java.time.LocalDateTime;
 
 public class clientsocketThread extends Thread{
     private Socket socket;
@@ -47,7 +48,11 @@ public class clientsocketThread extends Thread{
                     BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(path));
                     bufferedOutputStream.write(bytes);
                     bufferedOutputStream.close();
-                    System.out.println("\n文件保存成功");
+                    System.out.println("文件保存成功");
+                }else if(o.getMesType().equals(MessageType.MESSAGE_NEWS)){
+                    String sender=o.getSender();
+                    String content=o.getContent();
+                    System.out.println(sender+"：广播说"+content);
                 }
 
             } catch (IOException e) {

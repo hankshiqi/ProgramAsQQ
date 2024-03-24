@@ -10,9 +10,12 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class QQservers {
+    public static Vector<Message> offlineMsg=new Vector<>();
     public static ConcurrentHashMap<String,User> usermap=new ConcurrentHashMap<>();
     //HashMap没有线程安全，在多线程的情况下是不安全的，所以在多线程的情况下使用concurrent是线程安全的，但是在只读的情况下是无所谓的
     ServerSocket serverSocket=null;
@@ -30,6 +33,7 @@ public class QQservers {
         new QQservers();
     }
     public QQservers() throws IOException, ClassNotFoundException {
+        new Thread(new newsThread()).start();
         serverSocket=new ServerSocket(9999);
         try {
             while(true){
