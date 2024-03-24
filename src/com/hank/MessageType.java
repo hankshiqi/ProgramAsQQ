@@ -6,4 +6,8 @@ public interface MessageType {
     String MESSAGE_GET_ONLINE_USER="3";
     String MESSAGE_RET_ONLIEN_USER="4";
     String MESSAGE_READY_EXIT="5";
+    String MESSAGE_TO_OTHER_ONE="6";
+    String MESSAGE_TO_EVERYONE="7";
+    String MESSAGE_OFFILE="8";
+    String MESSAGE_NEWS="9";
 }

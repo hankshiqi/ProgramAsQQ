@@ -65,8 +65,27 @@ public class ServerToClientThread extends Thread{
                         ManageSTCthread.map.remove(uid);
                         System.out.println("用户："+uid+"已经与服务器端断开连接");
                     }
+                } else if (msg.getMesType().equals(MessageType.MESSAGE_TO_OTHER_ONE)) {
+                    ServerToClientThread target=ManageSTCthread.getonethread(msg.getReciver());
+                    Socket targetsocket=target.getSocket();
+                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(targetsocket.getOutputStream());
+                    objectOutputStream.writeObject(msg);
+                } else if (msg.getMesType().equals(MessageType.MESSAGE_TO_EVERYONE)) {
+                    for(Map.Entry<String,ServerToClientThread> each:ManageSTCthread.map.entrySet()){
+                        if(!each.getKey().equals(msg.getSender())){
+                            ServerToClientThread target= each.getValue();
+                            Socket targetsocket=target.getSocket();
+                            ObjectOutputStream objectOutputStream = new ObjectOutputStream(targetsocket.getOutputStream());
+                            objectOutputStream.writeObject(msg);
+                        }
+                    }
+                } else if (msg.getMesType().equals(MessageType.MESSAGE_OFFILE)) {
+                    ServerToClientThread target=ManageSTCthread.getonethread(msg.getReciver());
+                    Socket targetsocket=target.getSocket();
+                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(targetsocket.getOutputStream());
+                    objectOutputStream.writeObject(msg);
                 }
-                } catch (IOException e) {
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);

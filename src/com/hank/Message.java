@@ -7,6 +7,24 @@ public class Message implements Serializable {
     private String reciver;
     private String content;
     public String mesType;
+    public byte[] filebyte;
+    public String reciverPath;
+
+    public String getGeshi() {
+        return reciverPath;
+    }
+
+    public void setGeshi(String geshi) {
+        this.reciverPath = geshi;
+    }
+
+    public byte[] getFilebyte() {
+        return filebyte;
+    }
+
+    public void setFilebyte(byte[] filebyte) {
+        this.filebyte = filebyte;
+    }
 
     public Message(String sender, String reciver, String content, String mesType) {
         this.sender = sender;

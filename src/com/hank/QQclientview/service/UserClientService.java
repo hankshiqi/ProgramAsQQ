@@ -4,9 +4,7 @@ import com.hank.Message;
 import com.hank.MessageType;
 import com.hank.User;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -50,6 +48,42 @@ public class UserClientService {
         message.setMesType(MessageType.MESSAGE_READY_EXIT);
         clientsocketThread thread=ManagerClientConnectServer.getthread(user.getId());
         Socket socket1=thread.getSocket();
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket1.getOutputStream());
+        objectOutputStream.writeObject(message);
+    }
+    public void sentmsgToOtherOne(String reciver,String msgstr)throws IOException{
+        Message message=new Message();
+        message.setSender(user.getId());
+        message.setContent(msgstr);
+        message.setReciver(reciver);
+        message.setMesType(MessageType.MESSAGE_TO_OTHER_ONE);
+        clientsocketThread thread=ManagerClientConnectServer.getthread(user.getId());
+        Socket socket1 = thread.getSocket();
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket1.getOutputStream());
+        objectOutputStream.writeObject(message);
+    }
+    public void sentmsgToEverybody(String msgstr)throws IOException{
+        Message message = new Message();
+        message.setSender(user.getId());
+        message.setContent(msgstr);
+        message.setMesType(MessageType.MESSAGE_TO_EVERYONE);
+        clientsocketThread thread=ManagerClientConnectServer.getthread(user.getId());
+        Socket socket1 = thread.getSocket();
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket1.getOutputStream());
+        objectOutputStream.writeObject(message);
+    }
+    public void sendfile(String reciver,String senderPath,String geshi) throws Exception {
+        FileInputStream inputStream = new FileInputStream("E:\\baidudownload2\\分享资料\\qq1.png");
+        byte[] file=new byte[(int) new File("E:\\baidudownload2\\分享资料\\qq1.png").length()];
+        inputStream.read(file);
+        Message message = new Message();
+        message.setGeshi(geshi);
+        message.setSender(user.getId());
+        message.setReciver(reciver);
+        message.setMesType(MessageType.MESSAGE_OFFILE);
+        message.setFilebyte(file);
+        clientsocketThread thread=ManagerClientConnectServer.getthread(user.getId());
+        Socket socket1 = thread.getSocket();
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket1.getOutputStream());
         objectOutputStream.writeObject(message);
     }
