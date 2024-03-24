@@ -51,7 +51,8 @@ public class QQview {
                                     System.out.println("发送文件");
                                     break;
                                 case "9":
-                                    System.out.println("退出系统");
+//                                    System.out.println("退出系统");告知服务器端对应线程应该关闭
+                                    userservice.sentExitmsg();
                                     loop=false;
                                     break;
                             }

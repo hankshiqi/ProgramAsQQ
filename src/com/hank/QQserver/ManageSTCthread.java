@@ -5,6 +5,7 @@ import java.util.Map;
 
 public class ManageSTCthread {
     public static HashMap<String,ServerToClientThread> map=new HashMap<>();
+
     public static void addToSmap(String uid,ServerToClientThread thread)
     {
         map.put(uid,thread);

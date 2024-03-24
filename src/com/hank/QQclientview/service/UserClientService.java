@@ -26,6 +26,7 @@ public class UserClientService {
         Message message=(Message) objectInputStream.readObject();
         if(message.mesType.equals(MessageType.LOG_IN_SUCCESS)){
             clientsocketThread clientsocketThread = new clientsocketThread(socket);
+            clientsocketThread.setDaemon(true);
             clientsocketThread.start();//启动客户端接收服务器端线程，为了扩展，将该线程放入集合中进行管理
             ManagerClientConnectServer.addtomap(id,clientsocketThread);
             b=true;
@@ -38,6 +39,15 @@ public class UserClientService {
         Message message = new Message();
         message.setSender(user.getId());
         message.setMesType(MessageType.MESSAGE_GET_ONLINE_USER);
+        clientsocketThread thread=ManagerClientConnectServer.getthread(user.getId());
+        Socket socket1=thread.getSocket();
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket1.getOutputStream());
+        objectOutputStream.writeObject(message);
+    }
+    public void sentExitmsg() throws IOException {
+        Message message = new Message();
+        message.setSender(user.getId());
+        message.setMesType(MessageType.MESSAGE_READY_EXIT);
         clientsocketThread thread=ManagerClientConnectServer.getthread(user.getId());
         Socket socket1=thread.getSocket();
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket1.getOutputStream());

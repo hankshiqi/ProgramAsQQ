@@ -13,6 +13,15 @@ import java.util.Map;
 public class ServerToClientThread extends Thread{
     public Socket socket;
     public String uid;
+    public boolean loop=true;
+
+    public boolean isLoop() {
+        return loop;
+    }
+
+    public void setLoop(boolean loop) {
+        this.loop = loop;
+    }
 
     public ServerToClientThread(Socket socket, String uid) {
         this.socket = socket;
@@ -37,7 +46,7 @@ public class ServerToClientThread extends Thread{
 
     @Override
     public void run() {
-        while (true){
+        while (loop){
             try {
                 ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
                 Message msg=(Message)ois.readObject();
@@ -50,10 +59,14 @@ public class ServerToClientThread extends Thread{
                     messageback.setContent(sendback);
                     messageback.setReciver(msg.getSender());
                     objectOutputStream.writeObject(messageback);
-                }else {
-
+                }else if(msg.getMesType().equals(MessageType.MESSAGE_READY_EXIT)){
+                    if(msg.getSender().equals(uid)){
+                        loop=false;
+                        ManageSTCthread.map.remove(uid);
+                        System.out.println("用户："+uid+"已经与服务器端断开连接");
+                    }
                 }
-            } catch (IOException e) {
+                } catch (IOException e) {
                 throw new RuntimeException(e);
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);

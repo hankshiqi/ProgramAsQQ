@@ -33,7 +33,7 @@ public class clientsocketThread extends Thread{
                     System.out.println("====在线用户列表====");
                     String[] list=o.getContent().split(" ");
                     for(int i=0;i< list.length;i++){
-                        System.out.println(list[i]);
+                        System.out.println("用户:"+list[i]);
                     }
                 }else {
 
