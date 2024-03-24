@@ -34,4 +34,13 @@ public class UserClientService {
         }
         return b;
     }
+    public void getOnlineuser() throws IOException {
+        Message message = new Message();
+        message.setSender(user.getId());
+        message.setMesType(MessageType.MESSAGE_GET_ONLINE_USER);
+        clientsocketThread thread=ManagerClientConnectServer.getthread(user.getId());
+        Socket socket1=thread.getSocket();
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket1.getOutputStream());
+        objectOutputStream.writeObject(message);
+    }
 }

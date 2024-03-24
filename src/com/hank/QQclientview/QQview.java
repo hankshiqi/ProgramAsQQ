@@ -25,7 +25,8 @@ public class QQview {
                     String userid=Utility.readString(50);
                     System.out.println("请输入密码");
                     String psw=Utility.readString(50);
-                    if(new UserClientService().checkservice(userid,psw)){//这里要编写一个类，UserClientService用于用户分类及服务
+                    UserClientService userservice=new UserClientService();
+                    if(userservice.checkservice(userid,psw)){//这里要编写一个类，UserClientService用于用户分类及服务
                         System.out.println("=========网络通信系统二级菜单=========");
                         System.out.println("=========(用户 "+userid+")=========");
                         while (loop){
@@ -37,7 +38,8 @@ public class QQview {
                             key=Utility.readString(1);
                             switch (key){
                                 case "1":
-                                    System.out.println("显示在线用户列表");
+//                                    System.out.println("显示在线用户列表"),用一个userclienservice中的方法来实现
+                                    userservice.getOnlineuser();
                                     break;
                                 case "2":
                                     System.out.println("群发消息");

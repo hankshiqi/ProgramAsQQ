@@ -2,6 +2,7 @@ package com.hank.QQclientview.service;
 
 import com.hank.Message;
 import com.hank.MessageType;
+import com.hank.User;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -28,6 +29,15 @@ public class clientsocketThread extends Thread{
             try {
                 ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
                 Message o = (Message)objectInputStream.readObject();
+                if(o.getMesType().equals(MessageType.MESSAGE_RET_ONLIEN_USER)){
+                    System.out.println("====在线用户列表====");
+                    String[] list=o.getContent().split(" ");
+                    for(int i=0;i< list.length;i++){
+                        System.out.println(list[i]);
+                    }
+                }else {
+
+                }
             } catch (Exception e) {
                 try {
                     throw new Exception(e);

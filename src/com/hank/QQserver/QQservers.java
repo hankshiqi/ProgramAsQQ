@@ -14,6 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class QQservers {
     public static ConcurrentHashMap<String,User> usermap=new ConcurrentHashMap<>();
+    //HashMap没有线程安全，在多线程的情况下是不安全的，所以在多线程的情况下使用concurrent是线程安全的，但是在只读的情况下是无所谓的
     ServerSocket serverSocket=null;
     static {//静态代码块，在类加载时会执行一次
         usermap.put("影",new User("影","123456"));
